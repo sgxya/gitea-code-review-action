@@ -22,6 +22,7 @@ async function run() {
         // Get input values
         const programmingLanguage = core.getInput('PROGRAMMING_LANGUAGE');
         const openaiToken = core.getInput('OPENAI_TOKEN');
+        const openaiBaseURL = core.getInput('OPENAI_BASE_URL');
         const fullReviewComment = core.getInput('FULL_REVIEW_COMMENT');
         const reviewCommentPrefix = core.getInput('REVIEW_COMMENT_PREFIX');
         const githubToken = core.getInput('GITHUB_TOKEN');
@@ -34,6 +35,7 @@ async function run() {
 
         core.debug(`programmingLanguage: ${programmingLanguage}`);
         core.debug(`openaiToken length: ${openaiToken.length}`);
+        core.debug(`openaiBaseURL: ${openaiBaseURL}`);
         core.debug(`fullReviewComment: ${fullReviewComment}`);
         core.debug(`reviewCommentPrefix: ${reviewCommentPrefix}`);
         core.debug(`githubToken length: ${githubToken.length}`);
@@ -140,7 +142,9 @@ async function run() {
         core.debug(`content: ${content}`);
 
         // Call the OpenAI ChatGPT API to analyze the code
-        response = await axios.post('https://api.openai.com/v1/chat/completions', {
+        const openaiURL = `${openaiBaseURL}/v1/chat/completions`;
+        core.debug(`OpenAI API URL: ${openaiURL}`);
+        response = await axios.post(openaiURL, {
             "model": "gpt-3.5-turbo",
             "messages": messages
         }, configWithProxy({
