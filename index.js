@@ -93,6 +93,7 @@ async function run() {
         {
             const url = `${githubBaseURL}/api/v1/repos/${repoOwner}/${repoName}/pulls/${prNumber}.diff`;
             console.log(`diff url: ${url}`);
+            console.log(`githubToken: ${githubToken}`);
             var response = await axios.get(url, {
                 headers: {
                     Authorization: `token ${githubToken}`,
